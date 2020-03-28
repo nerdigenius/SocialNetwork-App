@@ -5,6 +5,7 @@ const users=require('./routes/api/users');
 const profile=require('./routes/api/profile');
 const posts=require('./routes/api/posts');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 
 require('dotenv').config();
@@ -18,7 +19,12 @@ app.use(bodyParser.json());
 mongoose.connect(uri,{useNewUrlParser: true, useCreateIndex:true,useUnifiedTopology: true});
 const port = process.env.PORT || 5000;
 
-app.get('/',(req,res)=> res.send('SexyBacck'));
+//passport middleware
+app.use(passport.initialize());
+
+//passport Config
+require('./config/passport')(passport);
+
 //use routes
 
 app.use('/api/users',users);
