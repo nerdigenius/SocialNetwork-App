@@ -101,4 +101,87 @@ router.post('/like/:id',passport.authenticate('jwt',{session:false}),(req,res)=>
         .catch(err=>res.status(404).json({nopostfound:'No posts found'}))
     })
 })
+
+//@route post api/posts/unlike/:id
+//@desc unlike post
+//@access private
+
+router.post('/unlike/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    Profile.findOne({user:req.user.id})
+    .then(profile=>{
+        Post.findById(req.params.id)
+        .then(post=>{
+            if(post.likes.filter(like=>like.user.toString()===req.user.id).length===0){
+                return res.status(400).json({alreadtliked:'User has not liked this post'})
+            }
+
+            //add user id to likes
+            else{
+                const removeIndex = post.likes.map(item=>item.user.toString()).indexOf(req.user.id);
+                //splice out of array
+                post.likes.splice(removeIndex,1)
+                post.save().then(post=>res.json(post))
+            }
+        })
+        .catch(err=>res.status(404).json({nopostfound:'No posts found'}))
+    })
+})
+
+//@route post api/posts/comment/:id
+//@desc add comment to post
+//@access private
+
+router.post('/comment/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    
+    const{errors,isValid} = validatePostInput(req.body)
+    //check validation
+    if(!isValid){
+        return res.status(400).json(errors)
+    }
+
+    Post.findById(req.params.id)
+    .then(post=>{
+        const newComment = {
+            text:req.body.text,
+            name:req.body.name,
+            avatar:req.body.avatar,
+            user:req.user.id
+        }
+        //add new comment
+        post.comments.unshift(newComment);
+
+        //save
+        post.save().then(post=>res.json(post))
+    })
+    .catch(err=>res.status(404).json({postnotfound:'post not found'}))
+})
+
+//@route delete api/posts/comment/:id
+//@desc Delete comment from post
+//@access private
+
+router.delete('/comment/:id/:comment_id',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    
+    
+    Post.findById(req.params.id)
+    .then(post=>{
+        
+        //check to see if comment exists
+        if(post.comments.filter(comments=>comments._id.toString()===req.params.comment_id).length===0)
+        {
+            return res.status(404).json({commentnotfound:'Comment not found'})
+        }
+        else{
+            const removeIndex=post.comments.map(item=>item._id.toString()).indexOf(req.params.comment_id)
+            //splice comment
+            post.comments.splice(removeIndex,1);
+
+            post.save().then(post=>res.json(post))
+        }
+
+    })
+    .catch(err=>res.status(404).json({postnotfound:'post not found'}))
+})
+
+
 module.exports = router;
