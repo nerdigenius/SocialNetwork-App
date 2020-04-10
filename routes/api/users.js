@@ -69,17 +69,19 @@ router.post('/register',(req,res)=>{
 //@access Public
 
 router.post('/login',(req,res)=>{
-    const email = req.body.email;
-    const password = req.body.password;
-
     const {errors,isValid}= validateLoginInput(req.body);
-    //check validation
-    if(!isValid){
+     //check validation
+     if(!isValid){
         return res.status(400).json(errors)
     }
 
+    const email = req.body.email;
+    const password = req.body.password;
+
+   
+
     //Find user
-    User.findOne({email: email})
+    User.findOne({email})
     .then(user=>{
         if(!user){
             errors.email='user not found'
