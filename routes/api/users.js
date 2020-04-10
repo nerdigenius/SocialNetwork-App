@@ -85,10 +85,11 @@ router.post('/login',(req,res)=>{
     .then(user=>{
         if(!user){
             errors.email='user not found'
-            return res.status(404).json({errors});
+            return res.status(404).json(errors);
         }
 
-        bcrypt.compare(password,user.password)
+        else{
+            bcrypt.compare(password,user.password)
         .then(isMatch=>{
             if(isMatch){
                 const payload = {id:user.id,name:user.name,avatar:user.avatar} // create jwt payload
@@ -104,6 +105,9 @@ router.post('/login',(req,res)=>{
                 return res.status(400).json(errors)
             }
         })
+        }
+
+        
     })
 })
 
