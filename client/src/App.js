@@ -16,7 +16,8 @@ import PrivateRoute from './components/common/PrivateRoute'
 import store from './store'
 import { clearCurrentProfile } from './actions/profileActions';
 import CreateProfile from './components/create_profile/CreateProfile'
-import EditProfile from './components/editProfile/EditProfile'
+import EditProfile from './components/editProfile/EditProfile';
+import AddExperience from './components/add-credentials/AddExperience';
 
 //check for token
 if(localStorage.jwtToken){
@@ -57,6 +58,9 @@ class App extends Component {
               </Switch>
               <Switch>
               <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
+              </Switch>
+              <Switch>
+              <PrivateRoute exact path="/add-experience" component={AddExperience }/>
               </Switch>
               
             </div>
