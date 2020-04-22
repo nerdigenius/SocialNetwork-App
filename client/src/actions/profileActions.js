@@ -51,6 +51,16 @@ export const addExperience=(expData,history)=>dispatch=>{
             payload:err.response.data
         }))
 }
+//Add education
+export const addEducation=(eduData,history)=>dispatch=>{
+    axios.post('/api/profile/education',eduData)
+    .then(res=>history.push('/dashboard'))
+    .catch(err=>
+        dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
+        }))
+}
 
 //delete account and profile
 export const deleteAccount=()=>dispatch=>{
