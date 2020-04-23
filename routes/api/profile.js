@@ -52,11 +52,11 @@ router.get('/all',(req,res)=>{
     .then(profiles=>{
         if(!profiles){
             errors.noProfile = 'There is no profile for this user'
-            res.status(404).json()
+            return res.status(404).json(errors)
         }
         res.json(profiles)
     })
-    .catch(err=>res.status(404).json({profile:'there is no profile'}))
+    .catch(err=>res.status(404).json({profiles:'there is no profile'}))
 
 })
 

@@ -52,13 +52,22 @@ class Navbar extends Component {
         </li>
       </ul>
     );
+
+    const AtuhenticatedBrand=(
+      <Link className="navbar-brand" to="/dashboard">
+              SocialApp
+      </Link>
+    )
+    const NotAuthenticatedBrand=(
+      <Link className="navbar-brand" to="/">
+              SocialApp
+      </Link>
+    )
     return (
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
           <div className="container">
-            <Link className="navbar-brand" to="/">
-              SocialApp
-            </Link>
+            {isAuthenticated? AtuhenticatedBrand:NotAuthenticatedBrand}
             <button
               className="navbar-toggler"
               type="button"
