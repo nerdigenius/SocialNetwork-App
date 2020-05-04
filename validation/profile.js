@@ -24,7 +24,7 @@ module.exports = function validateProfileinput(data){
 
     if(!isEmpty(data.website))
     {
-        if(!validator.isURL()){
+        if(!validator.isURL(data.website)){
             errors.website='Not a valid URL'
         }
 
