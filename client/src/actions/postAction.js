@@ -99,7 +99,7 @@ export const getPosts = (id)=>dispatch=>{
 //Add Comment
 export const addComment = (postId,comment)=>dispatch=>{
     dispatch(clearErrors())
-    axios.post(`/api/post/comment/${postId}`,comment)
+    axios.post(`/api/posts/comment/${postId}`,comment)
     .then(res=>
         dispatch({
             type:ADD_POST,
