@@ -93,3 +93,18 @@ export const getPosts = (id)=>dispatch=>{
             payload:null
         }))
 }
+
+//Add Comment
+export const addComment = (postId,comment)=>dispatch=>{
+    axios.post(`/api/posts/comment/${postId}`,comment)
+    .then(res=>
+        dispatch({
+            type:ADD_POST,
+            payload: res.data
+        }))
+    .catch(err=>
+        dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
+        }))
+}
