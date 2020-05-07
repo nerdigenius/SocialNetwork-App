@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getPosts} from '../../actions/postAction';
+import {getPost} from '../../actions/postAction';
 import Spinner from '../common/Spinner'
 import PostItem from '../../components/posts/PostItem'
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import CommentFeed from './CommentFeed'
 
 class Post extends Component {
     componentDidMount(){
-        this.props.getPosts(this.props.match.params.id)
+        this.props.getPost(this.props.match.params.id)
     }
     render() {
         const {post,loading} = this.props.post;
@@ -45,10 +45,10 @@ class Post extends Component {
     }
 }
 Post.propTypes={
-    getPosts:PropTypes.func.isRequired,
+    getPost:PropTypes.func.isRequired,
     post:PropTypes.object.isRequired
 }
 const mapStateToProps=state=>({
     post:state.post
 })
-export default connect(mapStateToProps,{getPosts}) (Post);
+export default connect(mapStateToProps,{getPost}) (Post);

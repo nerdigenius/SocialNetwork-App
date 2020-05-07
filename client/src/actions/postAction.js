@@ -19,7 +19,7 @@ export const addPost = postData=>dispatch=>{
 }
 
 //GET Posts
-export const getPost = ()=>dispatch=>{
+export const getPosts = ()=>dispatch=>{
     dispatch(setPostLoading())
     axios.get('/api/posts')
     .then(res=>
@@ -81,7 +81,7 @@ export const setPostLoading=()=>{
 }
 
 //GET Posts
-export const getPosts = (id)=>dispatch=>{
+export const getPost = (id)=>dispatch=>{
     dispatch(setPostLoading())
     axios.get(`/api/posts/${id}`)
     .then(res=>
@@ -102,7 +102,7 @@ export const addComment = (postId,comment)=>dispatch=>{
     axios.post(`/api/posts/comment/${postId}`,comment)
     .then(res=>
         dispatch({
-            type:ADD_POST,
+            type:GET_POST,
             payload: res.data
         }))
     .catch(err=>
