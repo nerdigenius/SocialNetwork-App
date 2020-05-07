@@ -18,7 +18,6 @@ class PostForm extends Component {
 
   componentWillReceiveProps(newProps){
     if (newProps.errors){
-      console.log(newProps)
       this.setState({errors:newProps.errors})
     }
   }
