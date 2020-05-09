@@ -10,13 +10,14 @@ const passport = require('passport');
 
 require('dotenv').config();
 const app = express();
-const uri =process.env.ATLAS_URI;
+const uri =require('./config/keys').ATLAS_URI;
 
 //body-parser middleware
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-mongoose.connect(uri,{useNewUrlParser: true, useCreateIndex:true,useUnifiedTopology: true});
+mongoose.connect(uri).then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));;
 const port = process.env.PORT || 5000;
 
 //passport middleware
@@ -33,8 +34,5 @@ app.use('/api/posts',posts);
 
 
 
-mongoose.connection.once('open',()=>{
-    console.log('mongoDB connnected successfully');
-});
 
 app.listen(port,()=>console.log(`server started on port ${port}`));
